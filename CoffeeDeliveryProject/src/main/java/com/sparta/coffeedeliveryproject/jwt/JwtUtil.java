@@ -1,6 +1,6 @@
 package com.sparta.coffeedeliveryproject.jwt;
 
-import com.sparta.coffeedeliveryproject.enums.UserRoleEnum;
+import com.sparta.coffeedeliveryproject.entity.UserRole;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -45,7 +45,7 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public String createAccessToken(String userName, UserRoleEnum role) {
+    public String createAccessToken(String userName, UserRole role) {
         Date date = new Date();
 
         return BEARER_PREFIX +
@@ -74,7 +74,7 @@ public class JwtUtil {
     public String getAccessTokenFromHeader(HttpServletRequest request) {
         // header에서 AccessToken을 가져온다.
         String accessToken = request.getHeader(AUTHORIZATION_HEADER);
-        // 공백인지, null인지 && BEARER로 시작을 하는지 확인
+        // 공백(null)인지 && BEARER로 시작을 하는지 확인
         if (StringUtils.hasText(accessToken) && accessToken.startsWith(BEARER_PREFIX)) {
             // 둘 다 만족할 경우 BEARER 뒤에 공백 길이만큼 잘라내고 순수한 토큰 값만을 리턴
             return accessToken.substring(BEARER_PREFIX.length());
